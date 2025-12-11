@@ -2,6 +2,9 @@ trigger:
 - main
 
 pool:
+  name: Default # Nome do agent pool
+  demands:
+    - Agent.Name -equals ag001  # Força o uso do agente específico
   vmImage: 'windows-latest'
 
 variables:
