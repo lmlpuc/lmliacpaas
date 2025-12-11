@@ -1,0 +1,44 @@
+trigger:
+- main
+
+pool:
+  name: Default # Nome do agent pool
+  demands:
+    - Agent.Name -equals ag001  # Força o uso do agente específico
+  vmImage: 'windows-latest'
+
+variables:
+  resourceGroupName: rg-iac-webapp
+  location: centralus
+  templateFile: arm-templates/webapp-template.json
+  parametersFile: arm-templates/webapp-parameters.json
+
+stages:
+- stage: DeployInfrastructure
+  jobs:
+  - job: ARM_Deployment
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'AZURE_Conn'
+        subscriptionId: '75b542e1-4e29-46e3-84e4-a024586c6e4a'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(templateFile)'
+        csmParametersFile: '$(parametersFile)'
+        deploymentMode: 'Incremental'
+
+- stage: DeployApp
+  dependsOn: DeployInfrastructure
+  jobs:
+  - job: Publish_HTML
+    steps:
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'AZURE_Conn'
+        appType: 'webApp'
+        appName: 'lmliacpaas001'
+        package: 'src'
