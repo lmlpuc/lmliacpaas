@@ -4,7 +4,18 @@
   "parameters": {
     "siteName": { "type": "string" },
     "location": { "type": "string" },
-    "skuName": { "type": "string", "defaultValue": "F1" }
+    "skuName": {
+      "type": "string",
+      "defaultValue": "B1"
+    },
+    "skuTier": {
+      "type": "string",
+      "defaultValue": "Basic"
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1
+    }
   },
   "resources": [
     {
@@ -15,7 +26,8 @@
       "kind": "app",
       "sku": {
         "name": "[parameters('skuName')]",
-        "tier": "Free"
+        "tier": "[parameters('skuTier')]",
+        "capacity": "[parameters('skuCapacity')]"
       },
       "properties": {
         "reserved": false

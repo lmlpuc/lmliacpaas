@@ -9,7 +9,13 @@
       "value": "centralus"
     },
     "skuName": {
-      "value": "F1"
+      "value": "B1"
+    },
+    "skuTier": {
+      "value": "Basic"
+    },
+    "skuCapacity": {
+      "value": 1
     }
   }
 }
