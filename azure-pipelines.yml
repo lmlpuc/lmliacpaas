@@ -40,5 +40,5 @@ stages:
       inputs:
         azureSubscription: 'AZURE_Conn'
         appType: 'webApp'
-        appName: 'lmliacpaas001'
+        appName: 'lmliacpaas002'
         package: 'src'
